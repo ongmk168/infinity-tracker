@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADC-INFINITY Tracker</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0F1117;color:#EAE6DC;font-family:Georgia,serif;padding-bottom:40px}
+.hdr{background:#181C26;border-bottom:1px solid rgba(201,168,76,0.3);padding:14px;text-align:center}
+.hdr h1{font-size:20px}.hdr span{color:#C9A84C}
+.pg{padding:16px;display:none}.pg.on{display:block}
+.btn{background:#C9A84C;color:#0F1117;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-bottom:10px;font-family:Georgia,serif}
+.obtn{background:transparent;color:#C9A84C;border:1px solid #C9A84C;border-radius:10px;padding:12px;font-size:13px;cursor:pointer;width:100%;margin-bottom:10px;font-family:Georgia,serif}
+.card{background:#1C2030;border:1px solid rgba(201,168,76,0.2);border-radius:14px;padding:14px;margin-bottom:12px}
+inp{width:100%;background:#222736;border:1px solid rgba(201,168,76,0.2);border-radius:10px;color:#EAE6DC;font-size:14px;padding:12px;outline:none;margin-bottom:10px;box-sizing:border-box;font-family:Georgia,serif}
+.arow{background:#222736;border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:13px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.crow{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.cbtn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(201,168,76,0.3);background:#222736;color:#C9A84C;font-size:20px;cursor:pointer;font-family:Georgia,serif}
+.cnum{font-size:26px;color:#C9A84C;min-width:36px;text-align:center}
+.kg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.kb{background:#222736;border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:10px;text-align:center}
+.kn{font-size:26px;color:#C9A84C}
+.kl{font-size:9px;color:#7A8099;text-transform:uppercase;letter-spacing:1px}
+.bk{background:transparent;border:none;color:#C9A84C;font-size:13px;cursor:pointer;margin-bottom:16px;font-family:Georgia,serif;padding:0}
+.ok{background:rgba(76,175,130,0.2);border:1px solid #4CAF82;color:#4CAF82;border-radius:10px;padding:10px;margin-bottom:10px;text-align:center;display:none}
+.er{background:rgba(224,90,90,0.2);border:1px solid #E05A5A;color:#E05A5A;border-radius:10px;padding:10px;margin-bottom:10px;text-align:center;display:none}
+.pin{text-align:center;font-size:22px;letter-spacing:10px}
+.tabs{display:flex;gap:6px;margin-bottom:14px}
+.tab{flex:1;padding:8px;border-radius:10px;font-size:11px;cursor:pointer;border:1px solid rgba(201,168,76,0.2);background:transparent;color:#7A8099;text-align:center;font-family:Georgia,serif}
+.tab.on{background:#C9A84C;color:#0F1117;font-weight:700}
+.wnav{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px}
+.wb{background:#222736;border:1px solid rgba(201,168,76,0.2);color:#C9A84C;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;font-family:Georgia,serif}
+.g4{display:grid;grid-template-columns:1fr 44px 44px 44px;gap:4px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:center;cursor:pointer}
+.dot{width:8px;height:8px;border-radius:50%;background:#333;display:inline-block;margin-right:6px}
+.dot.on{background:#4CAF82}
+.mu{color:#7A8099;font-size:12px}
+.ct{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;margin-bottom:12px}
+.inf{background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);color:#C9A84C;border-radius:10px;padding:10px;font-size:11px;text-align:center;margin-bottom:10px}
+.dv{height:1px;background:rgba(201,168,76,0.2);margin:12px 0}
+.ir{display:flex;gap:8px;margin-bottom:10px}
+.sm{background:#C9A84C;color:#0F1117;border:none;border-radius:8px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:Georgia,serif}
+.db{background:transparent;border:none;color:#E05A5A;cursor:pointer;font-size:16px;padding:0 4px}
+.em{text-align:center;color:#7A8099;font-size:12px;padding:20px 0}
+</style>
+</head>
+<body>
+<div class="hdr"><h1>ADC-<span>INFINITY</span></h1><small style="color:#7A8099;font-size:10px">Team Activity Tracker</small></div>
+
+<!-- HOME -->
+
+<div id="p0" class="pg on">
+  <div style="text-align:center;padding:20px 0 16px">
+    <img src="" onerror="this.style.display='none'" style="width:150px;height:150px;border-radius:50%;display:block;margin:0 auto 12px">
+    <div style="font-size:9px;letter-spacing:3px;color:#C9A84C;text-transform:uppercase;margin-bottom:6px">Team Activity Tracker</div>
+    <div id="cs" class="mu">🔄 Loading...</div>
+  </div>
+  <button class="btn" onclick="go(1)">👤 I'm an Advisor — Log Activity</button>
+  <button class="obtn" onclick="go(4)">🎯 Director View</button>
+</div>
+
+<!-- PICK NAME -->
+
+<div id="p1" class="pg">
+  <button class="bk" onclick="go(0)">← Back</button>
+  <div style="font-size:9px;letter-spacing:3px;color:#C9A84C;text-transform:uppercase;margin-bottom:6px">Select Your Name</div>
+  <div style="font-size:18px;margin-bottom:14px">Who are <span style="color:#C9A84C">you?</span></div>
+  <input style="width:100%;background:#222736;border:1px solid rgba(201,168,76,0.2);border-radius:10px;color:#EAE6DC;font-size:14px;padding:12px;outline:none;margin-bottom:10px;box-sizing:border-box;font-family:Georgia,serif" type="text" id="si" placeholder="🔍 Search name..." oninput="fa(this.value)">
+  <div id="al"></div>
+  <div class="dv"></div>
+  <div class="mu" style="text-align:center;margin-bottom:10px">Not in the list?</div>
+  <button class="obtn" onclick="go(2)">✏️ Type My Name</button>
+</div>
+
+<!-- TYPE NAME -->
+
+<div id="p2" class="pg">
+  <button class="bk" onclick="go(1)">← Back</button>
+  <div style="font-size:18px;margin-bottom:16px">Type your <span style="color:#C9A84C">name</span></div>
+  <input style="width:100%;background:#222736;border:1px solid rgba(201,168,76,0.2);border-radius:10px;color:#EAE6DC;font-size:14px;padding:12px;outline:none;margin-bottom:10px;box-sizing:border-box;font-family:Georgia,serif" type="text" id="tn" placeholder="Your full name...">
+  <button class="btn" onclick="pickTyped()">Continue →</button>
+</div>
+
+<!-- LOG ACTIVITY -->
+
+<div id="p3" class="pg">
+  <button class="bk" onclick="go(1)">← Change Name</button>
+  <div style="margin-bottom:16px">
+    <div style="font-size:9px;letter-spacing:3px;color:#C9A84C;text-transform:uppercase">Logging as</div>
+    <div style="font-size:22px" id="ln"></div>
+    <div class="mu" id="ld"></div>
+  </div>
+  <div id="sm" class="ok">✅ Saved! Director can see your numbers.</div>
+  <div class="card">
+    <div class="ct">📅 Today's Numbers</div>
+    <div class="crow">
+      <div><div style="font-size:13px">📅 Appointments</div><div class="mu">Client meetings</div></div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="cbtn" onclick="adj('a',-1)">−</button>
+        <div class="cnum" id="va">0</div>
+        <button class="cbtn" onclick="adj('a',1)">+</button>
+      </div>
+    </div>
+    <div class="crow">
+      <div><div style="font-size:13px">💰 Sales Cases Closed</div><div class="mu">New policies today</div></div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="cbtn" onclick="adj('s',-1)">−</button>
+        <div class="cnum" id="vs">0</div>
+        <button class="cbtn" onclick="adj('s',1)">+</button>
+      </div>
+    </div>
+    <div class="crow">
+      <div><div style="font-size:13px">🔧 Servicing</div><div class="mu">Existing clients</div></div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="cbtn" onclick="adj('v',-1)">−</button>
+        <div class="cnum" id="vv">0</div>
+        <button class="cbtn" onclick="adj('v',1)">+</button>
+      </div>
+    </div>
+    <button class="btn" id="sb" style="margin-top:16px;margin-bottom:0" onclick="save()">💾 Save Today's Activity</button>
+  </div>
+  <div class="card">
+    <div class="ct">📊 My Week</div>
+    <div class="kg">
+      <div class="kb"><div class="kn" id="wa">0</div><div class="kl">Appts</div></div>
+      <div class="kb"><div class="kn" id="ws">0</div><div class="kl">Sales</div></div>
+      <div class="kb"><div class="kn" id="wv">0</div><div class="kl">Service</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PIN -->
+
+<div id="p4" class="pg">
+  <button class="bk" onclick="go(0)">← Back</button>
+  <div style="text-align:center;padding:20px 0 24px">
+    <div style="font-size:44px;margin-bottom:10px">🔐</div>
+    <div style="font-size:20px;margin-bottom:6px">Director <span style="color:#C9A84C">Access</span></div>
+    <div class="mu">Enter your 4-digit PIN</div>
+  </div>
+  <div id="pe" class="er">❌ Incorrect PIN</div>
+  <input class="pin" style="width:100%;background:#222736;border:1px solid rgba(201,168,76,0.2);border-radius:10px;color:#EAE6DC;font-size:22px;padding:12px;outline:none;margin-bottom:10px;box-sizing:border-box;font-family:Georgia,serif;text-align:center;letter-spacing:10px" type="password" inputmode="numeric" maxlength="4" id="pi" placeholder="••••">
+  <button class="btn" onclick="chkPin()">Enter →</button>
+  <div class="mu" style="text-align:center">PIN: 1234</div>
+</div>
+
+<!-- DASHBOARD -->
+
+<div id="p5" class="pg">
+  <button class="bk" onclick="go(0)">← Back</button>
+  <div style="margin-bottom:14px">
+    <div style="font-size:9px;letter-spacing:3px;color:#C9A84C;text-transform:uppercase">Director Dashboard</div>
+    <div style="font-size:22px">Team <span style="color:#C9A84C">Overview</span></div>
+  </div>
+  <div class="inf" id="li">🔄 Loading data...</div>
+  <div class="wnav">
+    <button class="wb" onclick="cw(-1)">‹</button>
+    <div id="wl" style="font-size:11px;color:#7A8099;min-width:160px;text-align:center"></div>
+    <button class="wb" onclick="cw(1)">›</button>
+  </div>
+  <div class="kg">
+    <div class="kb"><div class="kn" id="ta">0</div><div class="kl">Appts</div></div>
+    <div class="kb"><div class="kn" id="ts">0</div><div class="kl">Sales</div></div>
+    <div class="kb"><div class="kn" id="tv">0</div><div class="kl">Service</div></div>
+  </div>
+  <div class="tabs">
+    <div class="tab on" id="tb0" onclick="swTab(0,this)">👥 Team</div>
+    <div class="tab" id="tb1" onclick="swTab(1,this)">🏆 Top</div>
+    <div class="tab" id="tb2" onclick="swTab(2,this)">⚙️ Manage</div>
+  </div>
+  <div id="tv0">
+    <div class="card">
+      <div class="ct">👥 All Advisors — tap for detail</div>
+      <div class="g4" style="cursor:default"><div style="font-size:9px;color:#7A8099">NAME</div><div style="font-size:9px;color:#C9A84C;text-align:center">APT</div><div style="font-size:9px;color:#C9A84C;text-align:center">SLS</div><div style="font-size:9px;color:#C9A84C;text-align:center">SRV</div></div>
+      <div id="tl"></div>
+    </div>
+  </div>
+  <div id="tv1" style="display:none"><div class="card"><div class="ct">🏆 Top Performers</div><div id="pl"></div></div></div>
+  <div id="tv2" style="display:none">
+    <div class="card"><div class="ct">➕ Add Advisor</div>
+      <div class="ir"><input style="flex:1;background:#222736;border:1px solid rgba(201,168,76,0.2);border-radius:10px;color:#EAE6DC;font-size:13px;padding:10px;outline:none;font-family:Georgia,serif" type="text" id="ni" placeholder="Name..."><button class="sm" onclick="addAdv()">+</button></div>
+    </div>
+    <div class="card"><div class="ct" id="mc">👥 Advisors</div><div id="ml"></div></div>
+  </div>
+</div>
+
+<!-- DETAIL -->
+
+<div id="p6" class="pg">
+  <button class="bk" onclick="go(5)">← Back</button>
+  <div style="margin-bottom:14px">
+    <div style="font-size:9px;letter-spacing:3px;color:#C9A84C;text-transform:uppercase">Advisor Detail</div>
+    <div style="font-size:22px" id="dn"></div>
+    <div class="mu" id="dw"></div>
+  </div>
+  <div class="kg">
+    <div class="kb"><div class="kn" id="da">0</div><div class="kl">Appts</div></div>
+    <div class="kb"><div class="kn" id="ds">0</div><div class="kl">Sales</div></div>
+    <div class="kb"><div class="kn" id="dv">0</div><div class="kl">Service</div></div>
+  </div>
+  <div class="card"><div class="ct">📅 Daily Breakdown</div><div id="dd"></div></div>
+</div>
+
+<script>
+const DB = "https://adc-infinity-default-rtdb.asia-southeast1.firebasedatabase.app";
+const PIN = "1234";
+const NAMES = ["Sharon","Serene","Eileen","Ellen","Sock Lay","Seah KC","Hilary","Francis","Dawn","Peter","Puteri"];
+let adv = [...NAMES];
+let who = null, wo = 0;
+let cv = {a:0,s:0,v:0};
+let allLogs = {};
+
+// Show page
+function go(n) {
+  document.querySelectorAll(".pg").forEach(p=>p.classList.remove("on"));
+  document.getElementById("p"+n).classList.add("on");
+  if(n===1){document.getElementById("si").value="";showNames("");}
+  if(n===3) showLog();
+  if(n===5) startDir();
+}
+
+// Show advisor names - runs immediately from NAMES array
+function showNames(q) {
+  const el = document.getElementById("al");
+  const list = adv.filter(a=>a.toLowerCase().includes(q.toLowerCase()));
+  if(list.length === 0){ el.innerHTML='<div class="mu" style="text-align:center;padding:10px">No names found</div>'; return; }
+  el.innerHTML = list.map(a=>
+    '<div class="arow" onclick="pickName(\''+a+'\')">'+
+    '<div><div style="font-size:14px;color:#EAE6DC">'+a+'</div><div class="mu">Tap to log</div></div>'+
+    '<span style="color:#C9A84C;font-size:20px">›</span></div>'
+  ).join("");
+}
+function fa(v){ showNames(v); }
+
+function pickName(n) {
+  who = n;
+  cv = {a:0,s:0,v:0};
+  // Try get today's data
+  get("logs/"+sn(n)+"/"+today(), d=>{
+    if(d){ cv={a:d.appointments||0,s:d.sales||0,v:d.servicing||0}; }
+    go(3);
+  });
+}
+function pickTyped() {
+  const n = document.getElementById("tn").value.trim();
+  if(!n) return;
+  who=n; cv={a:0,s:0,v:0}; go(3);
+}
+
+// Log screen
+function showLog() {
+  document.getElementById("ln").textContent = who;
+  document.getElementById("ld").textContent = new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"});
+  document.getElementById("va").textContent = cv.a;
+  document.getElementById("vs").textContent = cv.s;
+  document.getElementById("vv").textContent = cv.v;
+  weekTotals(who,0,w=>{
+    document.getElementById("wa").textContent=w.a;
+    document.getElementById("ws").textContent=w.s;
+    document.getElementById("wv").textContent=w.v;
+  });
+}
+function adj(k,d){ cv[k]=Math.max(0,cv[k]+d); document.getElementById("v"+k).textContent=cv[k]; }
+function save() {
+  const btn=document.getElementById("sb");
+  btn.disabled=true; btn.textContent="⏳ Saving...";
+  set("logs/"+sn(who)+"/"+today(),{appointments:cv.a,sales:cv.s,servicing:cv.v},()=>{
+    btn.disabled=false; btn.textContent="💾 Save Today's Activity";
+    const m=document.getElementById("sm"); m.style.display="block";
+    setTimeout(()=>m.style.display="none",3000);
+    weekTotals(who,0,w=>{
+      document.getElementById("wa").textContent=w.a;
+      document.getElementById("ws").textContent=w.s;
+      document.getElementById("wv").textContent=w.v;
+    });
+  });
+}
+
+// Director
+function chkPin(){
+  if(document.getElementById("pi").value===PIN){document.getElementById("pi").value="";go(5);}
+  else{const e=document.getElementById("pe");e.style.display="block";document.getElementById("pi").value="";setTimeout(()=>e.style.display="none",2000);}
+}
+function cw(d){ wo+=d; renderDir(); }
+function swTab(n,el){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("on")); el.classList.add("on");
+  [0,1,2].forEach(i=>document.getElementById("tv"+i).style.display=i===n?"block":"none");
+}
+
+function startDir(){
+  renderDir();
+  // Poll Firebase every 5s
+  get("logs",d=>{ allLogs=d||{}; renderDir(); setInterval(()=>get("logs",d2=>{allLogs=d2||{};renderDir();}),5000); });
+  get("advisors",d=>{ if(d&&Array.isArray(d)){adv=d;renderDir();} else{set("advisors",NAMES,null);} });
+  document.getElementById("li").textContent="🟢 Live — refreshes every 5 seconds";
+  document.getElementById("li").style.color="#4CAF82";
+}
+
+function renderDir(){
+  document.getElementById("wl").textContent=wkLabel(wo);
+  const dates=wkDates(wo);
+  const stats=adv.map(a=>{
+    const al=allLogs[sn(a)]||{};
+    const t=dates.reduce((acc,dt)=>{const l=al[dt]||{appointments:0,sales:0,servicing:0};return{a:acc.a+l.appointments,s:acc.s+l.sales,v:acc.v+l.servicing};},{a:0,s:0,v:0});
+    return{name:a,...t};
+  });
+  const tot=stats.reduce((a,x)=>({a:a.a+x.a,s:a.s+x.s,v:a.v+x.v}),{a:0,s:0,v:0});
+  document.getElementById("ta").textContent=tot.a;
+  document.getElementById("ts").textContent=tot.s;
+  document.getElementById("tv").textContent=tot.v;
+
+  document.getElementById("tl").innerHTML=stats.map(x=>{
+    const tot=x.a+x.s+x.v;
+    return '<div class="g4" onclick="showDetail(\''+x.name+'\')">'+
+      '<div><span class="dot'+(tot>0?' on':'')+'"></span><span style="font-size:13px">'+x.name+'</span></div>'+
+      '<div style="font-size:13px;text-align:center;color:'+(x.a>0?'#EAE6DC':'#7A8099')+'">'+(x.a||'—')+'</div>'+
+      '<div style="font-size:13px;text-align:center;color:'+(x.s>0?'#EAE6DC':'#7A8099')+'">'+(x.s||'—')+'</div>'+
+      '<div style="font-size:13px;text-align:center;color:'+(x.v>0?'#EAE6DC':'#7A8099')+'">'+(x.v||'—')+'</div></div>';
+  }).join("");
+
+  const srt=[...stats].sort((a,b)=>(b.a+b.s+b.v)-(a.a+a.s+a.v)).filter(x=>x.a+x.s+x.v>0);
+  const md=["🥇","🥈","🥉"];
+  document.getElementById("pl").innerHTML=srt.length===0?'<div class="em">No activity this week</div>':
+    srt.map((x,i)=>'<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer" onclick="showDetail(\''+x.name+'\')">'+
+      '<div style="display:flex;align-items:center;gap:10px"><div style="font-size:18px;min-width:28px">'+(md[i]||(i+1)+'.')+'</div>'+
+      '<div><div style="font-size:13px">'+x.name+'</div><div class="mu">Total: '+(x.a+x.s+x.v)+'</div></div></div>'+
+      '<div style="display:flex;gap:4px">'+
+      '<span style="font-size:10px;padding:3px 7px;border-radius:8px;background:rgba(90,158,224,0.15);color:#5A9EE0">'+x.a+'📅</span>'+
+      '<span style="font-size:10px;padding:3px 7px;border-radius:8px;background:rgba(201,168,76,0.15);color:#C9A84C">'+x.s+'💰</span>'+
+      '<span style="font-size:10px;padding:3px 7px;border-radius:8px;background:rgba(76,175,130,0.15);color:#4CAF82">'+x.v+'🔧</span>'+
+      '</div></div>').join("");
+
+  document.getElementById("mc").textContent="👥 Advisors ("+adv.length+")";
+  document.getElementById("ml").innerHTML=adv.map(a=>
+    '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04)">'+
+    '<div style="font-size:13px">'+a+'</div>'+
+    '<button class="db" onclick="delAdv(\''+a+'\')">🗑️</button></div>').join("");
+}
+
+function addAdv(){
+  const n=document.getElementById("ni").value.trim();
+  if(!n||adv.includes(n))return;
+  adv.push(n); set("advisors",adv,null);
+  document.getElementById("ni").value=""; renderDir();
+}
+function delAdv(n){
+  if(!confirm("Remove "+n+"?"))return;
+  adv=adv.filter(a=>a!==n); set("advisors",adv,null); renderDir();
+}
+
+function showDetail(name){
+  const dates=wkDates(wo); const al=allLogs[sn(name)]||{}; const td2=today();
+  const wt=dates.reduce((a,dt)=>{const l=al[dt]||{appointments:0,sales:0,servicing:0};return{a:a.a+l.appointments,s:a.s+l.sales,v:a.v+l.servicing};},{a:0,s:0,v:0});
+  document.getElementById("dn").textContent=name;
+  document.getElementById("dw").textContent=wkLabel(wo);
+  document.getElementById("da").textContent=wt.a;
+  document.getElementById("ds").textContent=wt.s;
+  document.getElementById("dv").textContent=wt.v;
+  const days=dates.map(dt=>{const d=new Date(dt);const l=al[dt]||{appointments:0,sales:0,servicing:0};return{dt,lb:d.toLocaleDateString("en-GB",{weekday:"short",day:"numeric"}),a:l.appointments,s:l.sales,v:l.servicing};});
+  document.getElementById("dd").innerHTML=
+    '<div style="display:grid;grid-template-columns:1fr 52px 52px 52px;gap:4px;margin-bottom:8px">'+
+    '<div style="font-size:9px;color:#7A8099">DAY</div><div style="font-size:9px;color:#C9A84C;text-align:center">APT</div><div style="font-size:9px;color:#C9A84C;text-align:center">SLS</div><div style="font-size:9px;color:#C9A84C;text-align:center">SRV</div></div>'+
+    days.map(d=>'<div style="display:grid;grid-template-columns:1fr 52px 52px 52px;gap:4px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:center">'+
+      '<div style="font-size:11px;color:'+(d.dt===td2?'#C9A84C':'#EAE6DC')+'">'+d.lb+(d.dt===td2?' ●':'')+'</div>'+
+      '<div style="font-size:13px;text-align:center;color:'+(d.a>0?'#EAE6DC':'#7A8099')+'">'+(d.a||'—')+'</div>'+
+      '<div style="font-size:13px;text-align:center;color:'+(d.s>0?'#EAE6DC':'#7A8099')+'">'+(d.s||'—')+'</div>'+
+      '<div style="font-size:13px;text-align:center;color:'+(d.v>0?'#EAE6DC':'#7A8099')+'">'+(d.v||'—')+'</div></div>').join("");
+  go(6);
+}
+
+// Firebase REST
+function get(path,cb){
+  fetch(DB+"/"+path+".json").then(r=>r.json()).then(d=>cb(d)).catch(()=>cb(null));
+}
+function set(path,data,cb){
+  fetch(DB+"/"+path+".json",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)})
+    .then(()=>{if(cb)cb();}).catch(()=>{if(cb)cb();});
+}
+
+// Helpers
+function today(){ return new Date().toISOString().split("T")[0]; }
+function sn(n){ return n.replace(/[.#$\[\]]/g,"_"); }
+function mon(o=0){ const d=new Date(),dy=d.getDay(); d.setDate(d.getDate()-(dy===0?6:dy-1)+o*7); return d.toISOString().split("T")[0]; }
+function wkDates(o=0){ return Array.from({length:7},(_,i)=>{ const d=new Date(mon(o)); d.setDate(d.getDate()+i); return d.toISOString().split("T")[0]; }); }
+function wkLabel(o=0){ const m=new Date(mon(o)),s=new Date(m); s.setDate(m.getDate()+6); const f=d=>d.toLocaleDateString("en-GB",{day:"numeric",month:"short"}); return f(m)+" — "+f(s); }
+function weekTotals(name,o,cb){
+  const dates=wkDates(o);
+  Promise.all(dates.map(dt=>fetch(DB+"/logs/"+sn(name)+"/"+dt+".json").then(r=>r.json()).catch(()=>null)))
+    .then(rs=>{ const t=rs.reduce((a,d)=>{const l=d||{appointments:0,sales:0,servicing:0};return{a:a.a+l.appointments,s:a.s+l.sales,v:a.v+l.servicing};},{a:0,s:0,v:0}); cb(t); });
+}
+
+// START - show names immediately!
+showNames("");
+document.getElementById("cs").textContent="🟢 Ready";
+document.getElementById("cs").style.color="#4CAF82";
+// Sync advisors from Firebase in background
+get("advisors",d=>{ if(d&&Array.isArray(d)){adv=d; showNames("");} else{set("advisors",NAMES,null);} });
+</script>
+
+</body>
+</html>
